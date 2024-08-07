@@ -14,10 +14,9 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/" element={<AddJob/>}/>
         <Route path="/posted-job" element={<PostedJob/>}/>
+        {/* <Route path="/form" element={<Form/>}/> */}
       </Routes>
     </BrowserRouter> 
-    // <div>
-    //   <PostedJob/>
-    // </div>
+    
   );
 }

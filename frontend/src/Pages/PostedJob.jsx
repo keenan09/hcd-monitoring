@@ -107,7 +107,7 @@ function JobList({ jobs, formatDate, openModal}) {
                         <div className="deadline">
                             <p>Batas Lamar : {formatDate(job.dateEnd)}</p>
                         </div>
-                        <div className="button-group">
+                        <div className="card-job-button-group">
                             <button className="see-details-button" onClick={() => openModal(job)}> See Details </button>
                             <button className='apply-job-button'> Apply Job</button>
                         </div>
@@ -121,17 +121,17 @@ function JobList({ jobs, formatDate, openModal}) {
 function Footer({currentPage, jobsPerPage, jobsLength, handlePrevPage, handleNextPage, indexOfFirstJob, indexOfLastJob}) {
     return (
         <div className="footer">
-            <div className="entries">
+            <div className="posted-entries">
                 <p>Showing <strong>{indexOfFirstJob + 1}</strong> to <strong>{Math.min(indexOfLastJob, jobsLength)}</strong> of {jobsLength} entries </p>
             </div>
             <div className="button-group-card">
-                <button type="button" className="prev-button" 
+                <button type="button" className="posted-prev-button" 
                     onClick={handlePrevPage} 
                     disabled={currentPage === 1}
                 >
                     Previous
                 </button>
-                <button type="button" className="next-button" 
+                <button type="button" className="posted-next-button" 
                     onClick={handleNextPage} 
                     disabled={currentPage * jobsPerPage >= jobsLength}
                 >
@@ -149,7 +149,9 @@ function Modal({ job, closeModal }) {
                 <h2>{job.jobname}</h2>
                 <div className="modal-job-details">
                     <h4>Job Details</h4>
-                    <p>{job.jobDescription}</p>
+                    {job.jobDescription.split('\n').map((line, index) => (
+                        <p key={index}>{line}</p>
+                    ))}
                 </div>
                 <button className="close-modal-button" onClick={closeModal}>Close</button>
             </div>

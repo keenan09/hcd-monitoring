@@ -202,13 +202,13 @@ function TableApplicant({applicants, filter}){
                 
             </table>
             <div className="foot-layer">
-                <div className="button-group">
+                <div className="dashboard-button-group">
                     <button type="button" className="prev-button" 
                     onClick={handlePrevious} disabled={currentPage === 1 || sortedApplicants.length === 0}>Previous</button>
                     <button type="button" className="next-button"
                     onClick={handleNext} disabled={currentPage === totalPages || sortedApplicants.length === 0}>Next</button>
                 </div>
-                <div className="entries">
+                <div className="dashboard-entries">
                     <p>Showing <strong>{indexOfFirstItem + 1}</strong> to <strong>{Math.min(indexOfLastItem, applicants.length)}</strong> of {applicants.length} entries </p>
                 </div>
             </div>

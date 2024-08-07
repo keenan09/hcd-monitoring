@@ -114,7 +114,7 @@ function DescriptionInput({ formDescription, handleChange }){
                     </div>
                     <div className="end">
                         <label htmlFor="DateEnd">Tanggal Berakhir</label>
-                        <input type="date" name="dateEnd" id="DateEnd" min={new Date().toISOString().split("T")[0]} required
+                        <input type="date" name="dateEnd" id="DateEnd" min={formDescription.dateStart || new Date().toISOString().split("T")[0]} required
                         onChange={handleChange} value={formDescription.dateEnd} />
                     </div>
                 </div>

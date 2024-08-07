@@ -129,7 +129,6 @@ input[type="radio"] {
     border-radius: 10px ;
     text-align: center;
     padding: 5px;
-    margin: 2px;
 }
 
 input[type="checkbox"] {
@@ -149,17 +148,17 @@ div > label {
 
 .upload-input {
     padding: 8px;
-    border: 2px solid #007BFF; /* Border color */
-    border-radius: 4px; /* Rounded corners */
-    background-color: #f8f9fa; /* Background color */
+    border: 2px solid #007BFF;
+    border-radius: 4px; 
+    background-color: #f8f9fa; 
     font-size: 14px;
     cursor: pointer;
 }
 .upload-input:hover,
 .upload-input:focus {
   border-color: #0056b3;
-  background-color: #547aa3; /* Darker border color on hover/focus */
-  outline: none; /* Remove the default focus outline */
+  background-color: #547aa3;
+  outline: none; 
 }
 
 button[type="submit"] {
