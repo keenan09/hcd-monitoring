@@ -1,0 +1,279 @@
+.container-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #d9c8c8;
+}
+
+.hcd-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-awal, .form-akhir{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40px;
+    box-shadow: 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 10px;
+    background-color: #085AA1;
+    color: #fff;
+}
+
+
+
+.form-deskripsi{
+    width: 80%;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-kriteria {
+    width: 80%;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.form-deskripsi h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-deskripsi  p{
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: #ccc solid;
+    width: 17%;
+}
+
+.deadline{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.deadline .start, .deadline .end{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-deskripsi label {
+    color: antiquewhite;
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+}
+
+.form-deskripsi input[type="text"]{
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.form-deskripsi input[type="date"]{
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.form-deskripsi textarea {
+    width: 40%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    resize: vertical;
+}
+
+.form-kriteria h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-kriteria .box-left, .form-kriteria .box-right {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-kriteria p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form-kriteria label {
+    /* position: relative; */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.box-min-max{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    /* border: 1px red solid; */
+}
+
+.form-kriteria input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+}
+
+.check-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form-kriteria input[type="checkbox"]{
+    cursor: pointer;
+    margin-right: 10px;
+    border: 2px solid #007BFF; 
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.post-job{
+    margin: 10px;
+    padding: 10px;
+}
+button[type="submit"] {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #29383b;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2em;
+    box-shadow: 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 1024px) {
+    .form-awal, .form-akhir {
+        width: 100%;
+    }
+    
+    .form-deskripsi input[type="text"],
+    .form-deskripsi input[type="date"],
+    .form-deskripsi textarea {
+        width: 80%;
+    }
+    
+    .form-kriteria {
+        flex-direction: column;
+        align-items: center;
+        gap: 0px;
+    }
+
+    .form-kriteria p{
+        width: 60%;
+    }
+
+    .form-kriteria .box-left, .form-kriteria .box-right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-awal, .form-akhir {
+        width: 90%;
+    }
+
+    .form-deskripsi input[type="text"],
+    .form-deskripsi input[type="date"],
+    .form-deskripsi textarea {
+        width: 80%;
+    }
+
+    .form-kriteria {
+        gap: 20px;
+    }
+
+    .form-deskripsi p {
+        width: 35%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-awal, .form-akhir {
+        width: 100%;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .form-deskripsi input[type="text"],
+    .form-deskripsi input[type="date"],
+    .form-deskripsi textarea {
+        width: 100%;
+    }
+
+    .form-deskripsi p {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .deadline {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button[type="submit"] {
+        width: 80%;
+        font-size: 1em;
+    }
+}
+
+
+
+
+
+
+
+
+
+

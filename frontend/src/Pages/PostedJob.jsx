@@ -1,0 +1,116 @@
+import React from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios';
+
+import headerLogo from '../Assets/Images/r17panjang.png';
+import cardLogo from '../Assets/Images/r17logo.png';
+
+import '../Assets/Styles/PostedJob.css'
+
+
+function PostedJob() {
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const jobsPerPage = 6;
+
+    useEffect(() => {
+        const fetchJobs = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/jobs');
+                setJobs(response.data);
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchJobs();
+    }, []);
+
+    const handleNextPage = () => {
+        if (currentPage * jobsPerPage < jobs.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const indexOfLastJob = currentPage * jobsPerPage;
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+    const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (jobs.length === 0) return <p>No Data Available</p>;
+  
+  
+    return (
+    <div className='container'>
+        <div className='header'>
+            <img src={headerLogo} alt="r17" />
+        </div>
+        <div className='sec-header'>
+            <h1>R17 Group Career</h1>
+        </div>
+        {/* <div className="job-list">
+            {jobs.map(job => (
+                <div key={job._id} className="card-job">
+                    <img src={cardLogo} alt="" />
+                    <h3>{job.jobname}</h3>
+                    <p>R17 Group</p>
+                    <div className="hire">
+                        <p>Professional Hire</p>
+                    </div>
+                    <div className="deadline">
+                        <p>Batas Lamar : {new Date(job.dateEnd).toLocaleDateString()}</p>
+                    </div>
+                    <div className="button-group">
+                        <button className="see-details-button"> Lihat Detail </button>
+                        <button className='apply-job-button'> Apply Job</button>
+                    </div>
+                </div>
+            ))}
+        </div> */}
+        <div className="job-list">
+            {currentJobs.map(job => (
+                <div key={job._id} className="card-job">
+                    <img src={cardLogo} alt="" />
+                    <h3>{job.jobname}</h3>
+                    <p>R17 Group</p>
+                    <div className="hire">
+                        <p>Professional Hire</p>
+                    </div>
+                    <div className="deadline">
+                        <p>Batas Lamar : {new Date(job.dateEnd).toLocaleDateString()}</p>
+                    </div>
+                    <div className="button-group">
+                        <button className="see-details-button"> Lihat Detail </button>
+                        <button className='apply-job-button'> Apply Job</button>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <div className="footer">  
+            <div className="button-group-card">
+                <button type="button" className="prev-button" 
+                onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                <button type="button" className="next-button" 
+                onClick={handleNextPage} disabled={currentPage * jobsPerPage >= jobs.length}>Next</button>
+            </div>       
+            <div className="entries">
+                <p>Showing <strong>1</strong> to <strong>{jobs.length}</strong> of {jobs.length} entries </p>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default PostedJob
