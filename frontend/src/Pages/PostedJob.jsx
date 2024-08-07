@@ -71,7 +71,7 @@ export default function PostedJob() {
   
   
     return (
-        <div className='container'>
+        <div className='posted-job-container'>
             <div className='header'>
                 <img src={headerLogo} alt="r17" />
             </div>

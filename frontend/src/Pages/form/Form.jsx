@@ -7,7 +7,7 @@ import logo from '../../Assets/Images/r17panjang.png'
 //Applicant Form
 export default function Form() {
   return (
-    <div className='container'> 
+    <div className='form-container'> 
       <FormHeader/>
       <FormPertanyaan/>
     </div>
@@ -16,7 +16,7 @@ export default function Form() {
 
 function FormHeader(){
   return(
-    <div className="header">
+    <div className="header-form">
       <img src= {logo} alt="Company Logo" />
       <h1>R17 Career Form</h1>
     </div>
@@ -134,7 +134,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
   return(
     <div className="advantage-pertanyaan">
       <label>Berapa lama pengalaman kerjamu di posisi ini?*</label>
-      <div className='radio-group'>
+      <div className='form-radio-group'>
         <label><input type="radio" name="positionExperience" value="0-1" required onChange={onChangeHandler} autoComplete="off"/> 0-1 tahun</label>
         <label><input type="radio" name="positionExperience" value="1-3" onChange={onChangeHandler} autoComplete="off"/> 1-3 tahun</label>
         <label><input type="radio" name="positionExperience" value="3-5" onChange={onChangeHandler} autoComplete="off"/> 3-5 tahun</label>
@@ -142,7 +142,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
       </div>
 
       <label>Berapa lama pengalaman kerjamu di industri ini?*</label>
-      <div className='radio-group'>
+      <div className='form-radio-group'>
         <label><input type="radio" name="industryExperience" value="0-1" required onChange={onChangeHandler} autoComplete="off"/> 0-1 tahun</label>
         <label><input type="radio" name="industryExperience" value="1-3" onChange={onChangeHandler} autoComplete="off"/> 1-3 tahun</label>
         <label><input type="radio" name="industryExperience" value="3-5" onChange={onChangeHandler} autoComplete="off"/> 3-5 tahun</label>
@@ -150,12 +150,12 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
       </div>
 
       <label>Kemampuan bahasa asing yang dikuasai?</label>
-      <div className='check-box'>
-        <div className="checkbox-border">
+      <div className='form-check-box'>
+        <div className="form-checkbox-border">
           <input type="checkbox" name="languages" value="english" id='English' onChange={onChangeHandler} autoComplete="off"/>
           <label htmlFor="English">English</label>
         </div>
-        <div className="checkbox-border">
+        <div className="form-checkbox-border">
           <input type="checkbox" name="languages" value="mandarin" id='Mandarin' onChange={onChangeHandler} autoComplete="off"/>
           <label htmlFor="Mandarin">Mandarin</label> 
         </div>
@@ -166,7 +166,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
       onChange={onChangeHandler} autoComplete="off"/>
 
       <label>Bersedia ditempatkan dimana saja?*</label>
-      <div className='radio-group'>
+      <div className='form-radio-group'>
         <label><input type="radio" name="relocation" value="yes" required onChange={onChangeHandler}autoComplete="off"/> Ya </label>
         <label><input type="radio" name="relocation" value="no" onChange={onChangeHandler}autoComplete="off"/> Tidak </label>
       </div>
