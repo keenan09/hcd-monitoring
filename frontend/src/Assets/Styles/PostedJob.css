@@ -12,7 +12,7 @@
 .header{
     display: flex;
     width: 100%;
-    height: 110px;
+    height: 100px;
     background-color: #E3E0E0;
     justify-content: center;
     align-items: center;
@@ -48,9 +48,17 @@
     justify-content: space-evenly;
     margin: 15px auto;
     gap: 10px;
-    /* border: 1px red solid; */
 }
 
+.nothing-msg {
+    margin-top: 95px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    background: linear-gradient(to right, #184368, #085AA1);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 .card-job{
     display: flex;
     flex-direction: column;
@@ -58,10 +66,6 @@
     width: 30%;
     height: 220px;
     padding: 7px;
-        /* background-image: url('../Images/r17logo.png');
-        background-repeat: no-repeat;
-        background-position: right 15px;
-        background-size: 50px 50px; */
     border: 3px black solid;
     box-shadow: 5px 5px rgba(48, 47, 47, 0.1);
     border-radius: 20px;  
