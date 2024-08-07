@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import headerLogo from '../Assets/Images/r17panjang.png';
@@ -16,6 +17,7 @@ export default function PostedJob() {
     const [selectedJob, setSelectedJob] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const jobsPerPage = 6
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -78,7 +80,7 @@ export default function PostedJob() {
             <div className='sec-header'>
                 <h1>R17 Group Career</h1>
             </div>
-            <JobList jobs={currentJobs} formatDate={formatDate} openModal={openModal}/>
+            <JobList jobs={currentJobs} formatDate={formatDate} openModal={openModal} navigate={navigate}/>
             <Footer currentPage={currentPage} jobsPerPage={jobsPerPage} jobsLength={jobs.length} handlePrevPage={handlePrevPage}
                 handleNextPage={handleNextPage} indexOfFirstJob={indexOfFirstJob} indexOfLastJob={indexOfLastJob} />
             {isModalOpen && selectedJob && (
@@ -88,7 +90,7 @@ export default function PostedJob() {
     ) 
 }
 
-function JobList({ jobs, formatDate, openModal}) {
+function JobList({ jobs, formatDate, openModal, navigate}) {
     return (
         <div className="job-list">
             {jobs.length === 0 ? (
@@ -109,7 +111,7 @@ function JobList({ jobs, formatDate, openModal}) {
                         </div>
                         <div className="card-job-button-group">
                             <button className="see-details-button" onClick={() => openModal(job)}> See Details </button>
-                            <button className='apply-job-button'> Apply Job</button>
+                            <button className='apply-job-button' onClick={() => navigate('/form-apply')}> Apply Job</button>
                         </div>
                     </div>
                 ))

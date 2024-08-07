@@ -161,8 +161,8 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
         </div>
       </div>
 
-      <label htmlFor="Salary">Ekspektasi Gaji?</label>
-      <input type="number" id="Salary" name="salary" min="0" step="50000" placeholder='Type your salary expectation here...' 
+      <label htmlFor="Salary">Ekspektasi Gaji?*</label>
+      <input type="number" id="Salary" name="salary" min="0" step="50000" placeholder='Type your salary expectation here...' required 
       onChange={onChangeHandler} autoComplete="off"/>
 
       <label>Bersedia ditempatkan dimana saja?*</label>

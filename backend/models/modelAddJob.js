@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const jobSchema = new Schema({
     jobname: { type: String, required: true },
@@ -17,8 +17,8 @@ const jobSchema = new Schema({
     languages: { type: [String], required: true },
 }, {
     timestamps: true,
-});
+})
 
-const Job = mongoose.model('Job', jobSchema);
+const Job = mongoose.model('Job', jobSchema)
 
-module.exports = Job;
+module.exports = Job
