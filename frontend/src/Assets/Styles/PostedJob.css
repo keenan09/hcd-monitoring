@@ -1,7 +1,6 @@
 .container{
     margin: 0;
     width: 100%;
-    height: auto;
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
@@ -62,13 +61,15 @@
 .card-job{
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 10px;
     width: 30%;
-    height: 220px;
+    height: 270px;
     padding: 7px;
     border: 3px black solid;
     box-shadow: 5px 5px rgba(48, 47, 47, 0.1);
-    border-radius: 20px;  
+    border-radius: 20px;
+    box-sizing: border-box; 
+    position: relative; 
 }
 .card-job img{
     width: 50px;
@@ -118,10 +119,16 @@
 }
 
 .button-group{
-    width: 100% ;
+    width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    align-items:flex-end;
+    /* border: 1px red solid; */
+    position: absolute;
+    bottom: 0px;
+    left: 18px;
+
 }
 .see-details-button, .apply-job-button{
     background-color: #085AA1;
@@ -133,6 +140,8 @@
     text-align: center;
     font-size: 12px;
     cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
 }
 
 .see-details-button:hover, .apply-job-button:hover {
@@ -140,25 +149,46 @@
     transform: scale(1.05);
 }
 
-.footer {
+/* .footer {
     width: 80%;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
     align-items: center;
-    margin: 10px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+} */
+
+.footer{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     padding: 20px;
     background-color: #f8f9fa;
     border-top: 1px solid #ddd;
 }
 
-.button-group-card{
+.button-group-card {
+    position: absolute;
+    right: 140px; 
     display: flex;
-    flex-direction: row;
     gap: 10px;
     padding: 10px;
-
+    margin-top: 30px;
+    /* border: 1px red solid; */
 }
+.entries{
+    position: absolute;
+    left: 140px; 
+    display: flex;
+    gap: 10px;
+    padding: 10px; 
+    margin-top: 30px;
+}
+
 .prev-button, .next-button {
     padding: 10px 20px;
     font-size: 15px;
@@ -174,6 +204,65 @@
 
 .prev-button:active, .next-button:active {
     background-color: #ccc;
+}
+
+
+@media (max-width: 1200px) {
+    .card-job {
+        width: 45%; /* Adjust card width for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .sec-header h1 {
+        font-size: 40px; /* Smaller font size for smaller screens */
+    }
+
+    .job-list {
+        width: 50%; /* Wider list for smaller screens */
+    }
+
+    .card-job {
+        width: 100%; /* Full width for smaller screens */
+        /* height: auto;  */
+    }
+
+    .button-group {
+        bottom: 0;
+        padding: 10px; /* Add padding for mobile view */
+    }
+
+    .footer {
+        flex-direction: column; /* Stack footer items vertically */
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 708px){
+    .footer{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .header img {
+        width: 200px; /* Smaller logo for very small screens */
+        height: 50px;
+    }
+
+    .sec-header h1 {
+        font-size: 30px; /* Even smaller font size for very small screens */
+    }
+
+    .card-job {
+        padding: 5px; /* Reduce padding for very small screens */
+    }
+
+    .see-details-button, .apply-job-button {
+        font-size: 10px; /* Smaller button text for very small screens */
+        padding: 8px 15px; /* Smaller button padding */
+    }
 }
 
 

@@ -12,6 +12,7 @@ import Navbar from '../../Components/Navbar'
 export default function AddJob() {
     const [formDescription, setFormDescription] = useState({
         jobname: '',
+        jobAimed: '',
         dateStart: '',
         dateEnd: '',
         jobDescription: ''
@@ -93,6 +94,14 @@ function DescriptionInput({ formDescription, handleChange }){
                 <label htmlFor="Jobname">Nama job yang akan dibuka?</label>
                 <input type="text" id='Jobname' name="jobname" placeholder='type the job name here...' required
                 onChange={handleChange} value={formDescription.jobname}/>
+
+                <label>Job ditujukan untuk?</label>
+                <div className="radio-group">
+                    <label><input type="radio" name="jobAimed" value="Fresh Graduate" autoComplete="off" 
+                    onChange={handleChange} checked={formDescription.jobAimed === 'Fresh Graduate'}/> Fresh Graduate Hire </label>
+                    <label><input type="radio" name="jobAimed" value="Professional Hire"  autoComplete="off"
+                    onChange={handleChange} checked={formDescription.jobAimed === 'Professional Hire'}/> Professional Hire </label>
+                </div>
 
                 <div>
                     <p>Atur Deadline</p>

@@ -63,6 +63,27 @@
     width: 17%;
 }
 
+.form-deskripsi .radio-group{
+    display: flex;
+    flex-direction: row;
+    width: 52%;
+    gap: 20px;
+    /* border-bottom: 1px white solid; */  
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 250px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    position: relative;
+}
+
 .deadline{
     display: flex;
     flex-direction: row;
@@ -80,6 +101,7 @@
     font-weight: bold;
     margin-top: 15px;
     display: block;
+    /* border-bottom: 1px white solid; */
 }
 
 .form-deskripsi input[type="text"]{
@@ -90,6 +112,12 @@
     border: 1px solid #ccc;
     border-radius: 15px;
     box-sizing: border-box;
+    cursor: pointer;
+}
+
+.form-deskripsi input[type="radio"]{
+    padding: 10px;
+    margin-bottom: 20px;
     cursor: pointer;
 }
 .form-deskripsi input[type="date"]{
@@ -203,6 +231,8 @@ button[type="submit"]:hover {
     .form-deskripsi textarea {
         width: 80%;
     }
+
+
     
     .form-kriteria {
         flex-direction: column;
