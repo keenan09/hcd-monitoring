@@ -13,11 +13,14 @@ app.use(cors())
 app.use(bodyParser.json())
 
 // Routes
-const routeAddJob = require('./routes/routeAddJob')
-app.use('/jobs', routeAddJob)
+const routePostJob = require('./routes/routePostJob')
+app.use('/jobs', routePostJob)
 
 const routeGetJob = require('./routes/routeGetJob')
 app.use('/jobs', routeGetJob)
+
+const routePostForm = require('./routes/routePostForm')
+app.use('/forms', routePostForm)
 
 // Start the server
 const PORT = 5000

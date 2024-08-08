@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../../Assets/Styles/Form.css'
+import axios from 'axios';
 // import ReactDOM from 'react-dom/client';
 import logo from '../../Assets/Images/r17panjang.png'
 
@@ -7,20 +8,23 @@ import logo from '../../Assets/Images/r17panjang.png'
 //Applicant Form
 export default function Form({ job }) {
   
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
     const handleFormSubmit = () => {
       
       setShowSuccess(true)
-        setTimeout(() => {
-            setShowSuccess(false)
+      setIsFormSubmitted(true)
+      setTimeout(() => {
+        setShowSuccess(false)
+        // setIsFormSubmitted(false)
         }, 3000)
     };
   
   return (
     <div className='form-container'> 
       <FormHeader/>
-      <FormPertanyaan onFormSubmit={handleFormSubmit} job={job}/>
+      {!isFormSubmitted && <FormPertanyaan onFormSubmit={handleFormSubmit} job={job} />}
       {showSuccess && <div className="success-popup">Submit Success</div>}
     </div>
   );
@@ -58,19 +62,24 @@ function FormPertanyaan({onFormSubmit, job}){
 
   const [formAdvance, setFormAdvance] = useState(initialAdvanceState)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-        ...formBasic, 
-        ...formAdvance,
-        jobId: job._id,  
-        jobName: job.jobname 
-    })
-
+    
+    const formData = {
+      ...formBasic, 
+      ...formAdvance,
+      jobId: job._id,  
+      jobName: job.jobname 
+    }
+    try {
+      await axios.post('http://localhost:5000/forms/submit', formData);
+      onFormSubmit();
+    } catch (error) {
+        console.error('There was an error submitting the form!', error);
+    }
+    
     setFormBasic(initialBasicState)
     setFormAdvance(initialAdvanceState)
-
-    onFormSubmit()
     // document.getElementById('CV').value = ''
   };
 
