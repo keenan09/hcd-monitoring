@@ -95,7 +95,7 @@ function Filter({ filter, onFilterChange }){
             </div>
             <div className="filter-2">
                 <label htmlFor="position-search">Position</label> 
-                <select id="position-select" className="dropdown" value={filter.position} onChange={handlePositionChange}>
+                <select id="position-search" className="dropdown" value={filter.position} onChange={handlePositionChange}>
                     <option value="">All</option>
                     <option value="software engineer">Software Engineer</option>
                     <option value="data analyst">Data Analyst</option>
