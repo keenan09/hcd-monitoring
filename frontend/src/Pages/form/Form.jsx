@@ -5,11 +5,23 @@ import logo from '../../Assets/Images/r17panjang.png'
 
 
 //Applicant Form
-export default function Form() {
+export default function Form({ job }) {
+  
+  const [showSuccess, setShowSuccess] = useState(false);
+
+    const handleFormSubmit = () => {
+      
+      setShowSuccess(true)
+        setTimeout(() => {
+            setShowSuccess(false)
+        }, 3000)
+    };
+  
   return (
     <div className='form-container'> 
       <FormHeader/>
-      <FormPertanyaan/>
+      <FormPertanyaan onFormSubmit={handleFormSubmit} job={job}/>
+      {showSuccess && <div className="success-popup">Submit Success</div>}
     </div>
   );
 }
@@ -23,7 +35,7 @@ function FormHeader(){
   )
 }
 
-function FormPertanyaan(){
+function FormPertanyaan({onFormSubmit, job}){
   const initialBasicState = {
     name: '',
     email: '',
@@ -38,8 +50,8 @@ function FormPertanyaan(){
     industryExperience: '',
     salary: '',
     relocation: '',
-    cv: null,
     languages: [],
+    // cv: null,
   };
   
   const [formBasic, setFormBasic] = useState(initialBasicState)
@@ -48,20 +60,26 @@ function FormPertanyaan(){
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({...formBasic, ...formAdvance })
+    console.log({
+        ...formBasic, 
+        ...formAdvance,
+        jobId: job._id,  
+        jobName: job.jobname 
+    })
 
     setFormBasic(initialBasicState)
     setFormAdvance(initialAdvanceState)
 
+    onFormSubmit()
     // document.getElementById('CV').value = ''
   };
 
   return(
-    <div className='form-pertanyaan' onSubmit={handleSubmit}>
-      <form className='form-data'>
+    <div className='form-pertanyaan' >
+      <form className='form-data' onSubmit={handleSubmit}>
         <BasicQuestion formBasic={formBasic} setFormBasic={setFormBasic}/>
         <AdvanceQuestion formAdvance={formAdvance} setFormAdvance={setFormAdvance}/>
-        <button type="submit" >Submit</button>
+        <button type="submit"> Submit </button>
       </form>
     </div>
   )
@@ -108,15 +126,33 @@ function BasicQuestion({formBasic, setFormBasic}){
 
 
 function AdvanceQuestion({ formAdvance, setFormAdvance }){
-  const onChangeHandler = (e) => {
-    const { name, value, type, files, checked } = e.target
+  // const onChangeHandler = (e) => {
+  //   const { name, value, type, files, checked } = e.target
 
-    if (type === 'file') {
-      setFormAdvance({
-        ...formAdvance,
-        [name]: files[0],
-      })
-    } else if (type === 'checkbox') {
+  //   if (type === 'file') {
+  //     setFormAdvance({
+  //       ...formAdvance,
+  //       [name]: files[0],
+  //     })
+  //   } else if (type === 'checkbox') {
+  //     setFormAdvance({
+  //       ...formAdvance,
+  //       languages: checked 
+  //         ? [...formAdvance.languages, value] 
+  //         : formAdvance.languages.filter(lang => lang !== value),
+  //     })
+  //   } else {
+  //     setFormAdvance({
+  //       ...formAdvance,
+  //       [name]: value,
+  //     })
+  //   }
+  // }
+
+  const onChangeHandler = (e) => {
+    const { name, value, type, checked } = e.target
+
+    if (type === 'checkbox') {
       setFormAdvance({
         ...formAdvance,
         languages: checked 
@@ -135,44 +171,57 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
     <div className="advantage-pertanyaan">
       <label>Berapa lama pengalaman kerjamu di posisi ini?*</label>
       <div className='form-radio-group'>
-        <label><input type="radio" name="positionExperience" value="0-1" required onChange={onChangeHandler} autoComplete="off"/> 0-1 tahun</label>
-        <label><input type="radio" name="positionExperience" value="1-3" onChange={onChangeHandler} autoComplete="off"/> 1-3 tahun</label>
-        <label><input type="radio" name="positionExperience" value="3-5" onChange={onChangeHandler} autoComplete="off"/> 3-5 tahun</label>
-        <label><input type="radio" name="positionExperience" value="5+" onChange={onChangeHandler} autoComplete="off"/> Lebih dari 5 tahun</label>
+        <label><input type="radio" name="positionExperience" value="0-1" required onChange={onChangeHandler} 
+        checked={formAdvance.positionExperience === "0-1"} autoComplete="off"/> 0-1 tahun</label>
+        <label><input type="radio" name="positionExperience" value="1-3" onChange={onChangeHandler} 
+        checked={formAdvance.positionExperience === "1-3"} autoComplete="off"/> 1-3 tahun</label>
+        <label><input type="radio" name="positionExperience" value="3-5" onChange={onChangeHandler} 
+        checked={formAdvance.positionExperience === "3-5"} autoComplete="off"/> 3-5 tahun</label>
+        <label><input type="radio" name="positionExperience" value="5+" onChange={onChangeHandler} 
+        checked={formAdvance.positionExperience === "5+"} autoComplete="off"/> Lebih dari 5 tahun</label>
       </div>
 
       <label>Berapa lama pengalaman kerjamu di industri ini?*</label>
       <div className='form-radio-group'>
-        <label><input type="radio" name="industryExperience" value="0-1" required onChange={onChangeHandler} autoComplete="off"/> 0-1 tahun</label>
-        <label><input type="radio" name="industryExperience" value="1-3" onChange={onChangeHandler} autoComplete="off"/> 1-3 tahun</label>
-        <label><input type="radio" name="industryExperience" value="3-5" onChange={onChangeHandler} autoComplete="off"/> 3-5 tahun</label>
-        <label><input type="radio" name="industryExperience" value="5+" onChange={onChangeHandler} autoComplete="off"/> Lebih dari 5 tahun</label>
+        <label><input type="radio" name="industryExperience" value="0-1" required onChange={onChangeHandler} 
+        checked={formAdvance.industryExperience === "0-1"} autoComplete="off"/> 0-1 tahun</label>
+        <label><input type="radio" name="industryExperience" value="1-3" onChange={onChangeHandler} 
+        checked={formAdvance.industryExperience === "1-3"} autoComplete="off"/> 1-3 tahun</label>
+        <label><input type="radio" name="industryExperience" value="3-5" onChange={onChangeHandler} 
+        checked={formAdvance.industryExperience === "3-5"} autoComplete="off"/> 3-5 tahun</label>
+        <label><input type="radio" name="industryExperience" value="5+" onChange={onChangeHandler} 
+        checked={formAdvance.industryExperience === "5+"}autoComplete="off"/> Lebih dari 5 tahun</label>
       </div>
 
       <label>Kemampuan bahasa asing yang dikuasai?</label>
       <div className='form-check-box'>
         <div className="form-checkbox-border">
-          <input type="checkbox" name="languages" value="english" id='English' onChange={onChangeHandler} autoComplete="off"/>
+          <input type="checkbox" name="languages" value="english" id='English' onChange={onChangeHandler} 
+          checked={formAdvance.languages.includes("english")} autoComplete="off"/>
           <label htmlFor="English">English</label>
         </div>
         <div className="form-checkbox-border">
-          <input type="checkbox" name="languages" value="mandarin" id='Mandarin' onChange={onChangeHandler} autoComplete="off"/>
+          <input type="checkbox" name="languages" value="mandarin" id='Mandarin' onChange={onChangeHandler} 
+          checked={formAdvance.languages.includes("mandarin")} autoComplete="off"/>
           <label htmlFor="Mandarin">Mandarin</label> 
         </div>
       </div>
 
       <label htmlFor="Salary">Ekspektasi Gaji?*</label>
       <input type="number" id="Salary" name="salary" min="0" step="50000" placeholder='Type your salary expectation here...' required 
-      onChange={onChangeHandler} autoComplete="off"/>
+      onChange={onChangeHandler} value={formAdvance.salary} autoComplete="off"/>
 
       <label>Bersedia ditempatkan dimana saja?*</label>
       <div className='form-radio-group'>
-        <label><input type="radio" name="relocation" value="yes" required onChange={onChangeHandler}autoComplete="off"/> Ya </label>
-        <label><input type="radio" name="relocation" value="no" onChange={onChangeHandler}autoComplete="off"/> Tidak </label>
+        <label><input type="radio" name="relocation" value="yes" required onChange={onChangeHandler}
+        checked={formAdvance.relocation === "yes"} autoComplete="off"/> Ya </label>
+        <label><input type="radio" name="relocation" value="no" onChange={onChangeHandler}
+        checked={formAdvance.relocation === "no"} autoComplete="off"/> Tidak </label>
       </div>
-
-      <label htmlFor="CV">Upload CV*</label>
-      <input type="file" id="CV" className='upload-input' name="cv" placeholder='Upload your resume here...' required onChange={onChangeHandler} autoComplete="off"/>
+      
+      {/* <label htmlFor="CV">Upload CV*</label>
+      <input type="file" id="CV" className='upload-input' name="cv" placeholder='Upload your resume here...' required onChange={onChangeHandler} autoComplete="off"/> */}
+    
     </div>
   )
 }

@@ -69,20 +69,20 @@ export default function AddJob() {
     };
   
     return (
-    <div>
-        <Navbar/>
-        <div className="container-form" onSubmit={handleSubmit}>
-            <form className='hcd-form' >
-                <DescriptionInput formDescription={formDescription} handleChange={handleChangeDescription}/>
-                <KriteriaInput formKriteria={formKriteria} handleChange={handleChangeKriteria}/>
-                <div className='post-job'>
-                    <button type='submit' name='postjob' >Post Job</button>
-                </div>
-            </form>
-            
+        <div>
+            <Navbar/>
+            <div className="container-form" onSubmit={handleSubmit}>
+                <form className='hcd-form' >
+                    <DescriptionInput formDescription={formDescription} handleChange={handleChangeDescription}/>
+                    <KriteriaInput formKriteria={formKriteria} handleChange={handleChangeKriteria}/>
+                    <div className='post-job'>
+                        <button type='submit' name='postjob' >Post Job</button>
+                    </div>
+                </form>
+                
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 function DescriptionInput({ formDescription, handleChange }){
@@ -106,7 +106,7 @@ function DescriptionInput({ formDescription, handleChange }){
                 <div>
                     <p>Atur Deadline</p>
                 </div>
-                <div className='deadline'>
+                <div className='job-deadline'>
                     <div className='start'>
                         <label htmlFor="DateStart">Tanggal Dimulai</label>
                         <input type="date" name="dateStart" id="DateStart" min={new Date().toISOString().split("T")[0]} required

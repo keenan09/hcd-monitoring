@@ -1,12 +1,12 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import headerLogo from '../Assets/Images/r17panjang.png';
 import cardLogo from '../Assets/Images/r17logo.png';
 
 import '../Assets/Styles/PostedJob.css'
+import Form from '../Pages/form/Form';
 
 
 export default function PostedJob() {
@@ -16,8 +16,8 @@ export default function PostedJob() {
     const [currentPage, setCurrentPage] = useState(1)
     const [selectedJob, setSelectedJob] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isApplyJob, setIsApplyJob] = useState(false)
     const jobsPerPage = 6
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -58,14 +58,16 @@ export default function PostedJob() {
         }).format(new Date(date))
     }
 
-    const openModal = (job) => {
+    const openModal = (job, applyJob = false) => {
         setSelectedJob(job)
         setIsModalOpen(true)
+        setIsApplyJob(applyJob)
     }
 
     const closeModal = () => {
         setIsModalOpen(false)
         setSelectedJob(null)
+        setIsApplyJob(false)
     }
 
     if (loading) return <p>Loading...</p>
@@ -80,17 +82,17 @@ export default function PostedJob() {
             <div className='sec-header'>
                 <h1>R17 Group Career</h1>
             </div>
-            <JobList jobs={currentJobs} formatDate={formatDate} openModal={openModal} navigate={navigate}/>
+            <JobList jobs={currentJobs} formatDate={formatDate} openModal={openModal}/>
             <Footer currentPage={currentPage} jobsPerPage={jobsPerPage} jobsLength={jobs.length} handlePrevPage={handlePrevPage}
                 handleNextPage={handleNextPage} indexOfFirstJob={indexOfFirstJob} indexOfLastJob={indexOfLastJob} />
             {isModalOpen && selectedJob && (
-                <Modal job={selectedJob} closeModal={closeModal}/>
+                <Modal job={selectedJob} closeModal={closeModal} isApplyJob={isApplyJob}/>
             )}
         </div>
     ) 
 }
 
-function JobList({ jobs, formatDate, openModal, navigate}) {
+function JobList({ jobs, formatDate, openModal}) {
     return (
         <div className="job-list">
             {jobs.length === 0 ? (
@@ -111,7 +113,7 @@ function JobList({ jobs, formatDate, openModal, navigate}) {
                         </div>
                         <div className="card-job-button-group">
                             <button className="see-details-button" onClick={() => openModal(job)}> See Details </button>
-                            <button className='apply-job-button' onClick={() => navigate('/form-apply')}> Apply Job</button>
+                            <button className='apply-job-button' onClick={() => openModal(job, true)}> Apply Job</button>
                         </div>
                     </div>
                 ))
@@ -144,16 +146,26 @@ function Footer({currentPage, jobsPerPage, jobsLength, handlePrevPage, handleNex
     );
 }
 
-function Modal({ job, closeModal }) {
+function Modal({ job, closeModal, isApplyJob}) {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <h2>{job.jobname}</h2>
-                <div className="modal-job-details">
-                    <h4>Job Details</h4>
-                    {job.jobDescription.split('\n').map((line, index) => (
-                        <p key={index}>{line}</p>
-                    ))}
+            <div className="modal-body">
+                    {isApplyJob ? (
+                        <div className="form-container">
+                            <Form job={job} />
+                        </div>
+                    ) : (
+                        <>
+                            <h2>{job.jobname}</h2>
+                            <div className="modal-job-details">
+                                <h4>Job Details</h4>
+                                {job.jobDescription.split('\n').map((line, index) => (
+                                    <p key={index}>{line}</p>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
                 <button className="close-modal-button" onClick={closeModal}>Close</button>
             </div>

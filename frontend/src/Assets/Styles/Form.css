@@ -178,3 +178,26 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+.success-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #402b8a;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeInOut 3s ease-in-out;
+    z-index: 1100;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
