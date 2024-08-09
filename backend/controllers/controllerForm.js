@@ -1,4 +1,4 @@
-const ApplicantFormSubmission = require('../models/modelApplicant')
+const FormSubmission = require('../models/modelForm')
 const path = require('path')
 
 exports.submitForm = async (req, res) => {
@@ -9,7 +9,7 @@ exports.submitForm = async (req, res) => {
         if (req.file) {
             formData.cv = req.file.filename
         }
-        const newForm = new ApplicantFormSubmission(formData)
+        const newForm = new FormSubmission(formData)
 
         await newForm.save()
         res.status(201).json({ message: "Form submitted successfully!" })

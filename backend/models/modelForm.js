@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema
 
-const ApplicantSchema = new Schema({
+const FormSubmissionSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
@@ -16,9 +17,9 @@ const ApplicantSchema = new Schema({
     jobId: { type: Schema.Types.ObjectId, ref: 'Job', required: true },
     jobName: { type: String, required: true },
     submittedAt: { type: Date, default: Date.now },
-    cv: { type: String, required: true },
+    cv: { type: String, required: true }
 });
 
-const Applicant = mongoose.model('Applicant', ApplicantSchema)
+const Applicant = mongoose.model('Applicant', FormSubmissionSchema)
 
 module.exports = Applicant

@@ -17,8 +17,8 @@ app.use('/jobs', routePostJob)
 const routeGetJob = require('./routes/routeGetJob')
 app.use('/jobs', routeGetJob)
 
-const routePostApplicant = require('./routes/routePostApplicant')
-app.use('/applicants', routePostApplicant)
+const routePostForm = require('./routes/routePostForm')
+app.use('/applicants', routePostForm)
 
 // Start the server
 const PORT = 5000
