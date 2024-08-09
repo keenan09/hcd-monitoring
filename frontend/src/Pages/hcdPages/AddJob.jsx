@@ -38,6 +38,11 @@ export default function AddJob() {
         });
     };
 
+    function formatSalary(value) {
+        return value.replace(/\D/g, '') 
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
     const handleChangeKriteria = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
@@ -47,6 +52,12 @@ export default function AddJob() {
                     ? [...prevState.languages, value]
                     : prevState.languages.filter(lang => lang !== value),
             }));
+        } else if(name === 'minSalary' || name === 'maxSalary'){
+            const formattedValue = formatSalary(value)
+            setFormKriteria({
+                ...formKriteria,
+                [name]: formattedValue,
+              })
         } else {
             setFormKriteria({
                 ...formKriteria,
@@ -59,8 +70,15 @@ export default function AddJob() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         
+        const formAddJobData = {
+            ...formDescription,
+            ...formKriteria,
+            // Remove formatting before submission
+            minSalary: parseInt(formKriteria.minSalary.replace(/\./g, ''), 10),
+            maxSalary: parseInt(formKriteria.maxSalary.replace(/\./g, ''), 10),
+        };
         try{
-            await axios.post('http://localhost:5000/jobs/add', { ...formDescription, ...formKriteria })
+            await axios.post('http://localhost:5000/jobs/add', formAddJobData)
             // console.log(response.data)
             navigate('/posted-job')
         } catch(error){
@@ -174,10 +192,10 @@ function FormRight({ formKriteria, handleChange }){
             <p>Ekspektasi gaji</p>
             <div className="box-min-max">
                 <label htmlFor="MinSalary">Minimum</label>
-                <input type="number" name="minSalary" id="MinSalary" min="0" step="50000" required
+                <input type="text" name="minSalary" id="MinSalary" required
                 onChange={handleChange} value={formKriteria.minSalary}/>
                 <label htmlFor="MaxSalary">Maximum</label>
-                <input type="number" name="maxSalary" id="MaxSalary" min="0" step="50000" required
+                <input type="text" name="maxSalary" id="MaxSalary" required
                 onChange={handleChange} value={formKriteria.maxSalary}/>
             </div>
             <p>Kemampuan bahasa asing yang diharuskan</p>

@@ -180,7 +180,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
           : formAdvance.languages.filter(lang => lang !== value),
       })
     } else if (name === 'salary'){
-      const formattedValue = formatSalary(value);
+      const formattedValue = formatSalary(value)
       setFormAdvance({
         ...formAdvance,
         salary: formattedValue,
