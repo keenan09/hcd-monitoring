@@ -13,7 +13,7 @@ export default function Navbar() {
         <nav>
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/">Add Job</Link>
-            <Link to="/posted-job">Career</Link>
+            <Link to="/r17-career">Career</Link>
         </nav>
       </div>
     </div>

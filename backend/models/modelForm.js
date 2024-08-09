@@ -17,6 +17,7 @@ const FormSubmissionSchema = new Schema({
     jobId: { type: Schema.Types.ObjectId, ref: 'Job', required: true },
     jobName: { type: String, required: true },
     submittedAt: { type: Date, default: Date.now },
+    cv: { type: String, required: true },
 });
 
 const Applicant = mongoose.model('Applicant', FormSubmissionSchema)

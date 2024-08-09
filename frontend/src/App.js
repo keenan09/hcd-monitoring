@@ -13,7 +13,7 @@ export default function App() {
       <Routes>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/" element={<AddJob/>}/>
-        <Route path="/posted-job" element={<PostedJob/>}/>
+        <Route path="/r17-career" element={<PostedJob/>}/>
         {/* <Route path="/form-apply" element={<Form/>}/> */}
       </Routes>
     </BrowserRouter> 

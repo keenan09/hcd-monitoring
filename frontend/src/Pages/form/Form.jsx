@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import '../../Assets/Styles/Form.css'
 import axios from 'axios';
-// import ReactDOM from 'react-dom/client';
 import logo from '../../Assets/Images/r17panjang.png'
 
 
@@ -17,7 +16,6 @@ export default function Form({ job }) {
     setIsFormSubmitted(true)
     setTimeout(() => {
       setShowSuccess(false)
-      // setIsFormSubmitted(false)
       }, 3000)
   };
   
@@ -55,33 +53,47 @@ function FormPertanyaan({popUpSubmit, job}){
     salary: '',
     relocation: '',
     languages: [],
-    // cv: null,
+    cv: null,
   };
   
   const [formBasic, setFormBasic] = useState(initialBasicState)
-
   const [formAdvance, setFormAdvance] = useState(initialAdvanceState)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    const formData = {
-      ...formBasic, 
-      ...formAdvance,
-      salary: parseInt(formAdvance.salary.replace(/\./g, ''), 10),
-      jobId: job._id,  
-      jobName: job.jobname 
+    const unformattedSalary = parseInt(formAdvance.salary.replace(/\./g, ''), 10)
+
+
+    const formData = new FormData()
+    for (const key in formBasic) {
+      formData.append(key, formBasic[key]);
     }
+    for (const key in formAdvance) {
+      if (key === 'salary') {
+        formData.append(key, unformattedSalary);
+      } else {
+        formData.append(key, formAdvance[key]);
+      }
+    }
+    // Object.keys(formBasic).forEach(key => formData.append(key, formBasic[key]))
+    // Object.keys(formAdvance).forEach(key => formData.append(key, formAdvance[key]))
+    formData.append('jobId', job._id)
+    formData.append('jobName', job.jobname)
+
     try {
-      await axios.post('http://localhost:5000/applicants/submit', formData);
-      popUpSubmit();
+      await axios.post('http://localhost:5000/applicants/submit', formData, {
+        headers:{
+          'Content-Type' : 'multipart/form-data'
+        }
+      });
+      popUpSubmit()
+      setFormBasic(initialBasicState)
+      setFormAdvance(initialAdvanceState)
+      document.getElementById('CV').value = ''
     } catch (error) {
         console.error('There was an error submitting the form!', error);
     }
-    
-    setFormBasic(initialBasicState)
-    setFormAdvance(initialAdvanceState)
-    // document.getElementById('CV').value = ''
   };
 
   
@@ -137,42 +149,21 @@ function BasicQuestion({formBasic, setFormBasic}){
 }
 
 
-function AdvanceQuestion({ formAdvance, setFormAdvance }){
-  // const onChangeHandler = (e) => {
-  //   const { name, value, type, files, checked } = e.target
-
-  //   if (type === 'file') {
-  //     setFormAdvance({
-  //       ...formAdvance,
-  //       [name]: files[0],
-  //     })
-  //   } else if (type === 'checkbox') {
-  //     setFormAdvance({
-  //       ...formAdvance,
-  //       languages: checked 
-  //         ? [...formAdvance.languages, value] 
-  //         : formAdvance.languages.filter(lang => lang !== value),
-  //     })
-  //   } else {
-  //     setFormAdvance({
-  //       ...formAdvance,
-  //       [name]: value,
-  //     })
-  //   }
-  // }
+function AdvanceQuestion({ formAdvance, setFormAdvance }){ 
   function formatSalary(value) {
-    return value.replace(/\D/g, '') 
-                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    const rawValue = value.replace(/\D/g, '');
+    return rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }
-  
-  // function unformatSalary(value) {
-  //   return value.replace(/\./g, ''); // Remove the thousand separators
-  // }
 
   const onChangeHandler = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type, checked, files } = e.target
 
-    if (type === 'checkbox') {
+    if(type === 'file'){
+      setFormAdvance({
+        ...formAdvance,
+        [name]: files[0],
+      })
+    } else if (type === 'checkbox') {
       setFormAdvance({
         ...formAdvance,
         languages: checked 
@@ -234,7 +225,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
       </div>
 
       <label htmlFor="Salary">Ekspektasi Gaji?*</label>
-      <input type="text" id="Salary" name="salary" min="0" step="50000" placeholder='Type your salary expectation here...' required 
+      <input type="text" id="Salary" name="salary" placeholder='Type your salary expectation here...' required 
       onChange={onChangeHandler} value={formAdvance.salary} autoComplete="off"/>
 
       <label>Bersedia ditempatkan dimana saja?*</label>
@@ -245,9 +236,9 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
         checked={formAdvance.relocation === "no"} autoComplete="off"/> Tidak </label>
       </div>
       
-      {/* <label htmlFor="CV">Upload CV*</label>
+      <label htmlFor="CV">Upload CV*</label>
       <input type="file" id="CV" className='upload-input' name="cv" accept="application/pdf "placeholder='Upload your resume here...' 
-      required onChange={onChangeHandler} autoComplete="off"/> */}
+      required onChange={onChangeHandler} autoComplete="off"/>
     
     </div>
   )

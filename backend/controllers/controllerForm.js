@@ -1,10 +1,14 @@
-const FormSubmission = require('../models/modelForm');
+const FormSubmission = require('../models/modelForm')
+const path = require('path')
 
 exports.submitForm = async (req, res) => {
     try {
         const formData = req.body
+        formData.submittedAt = new Date() 
         
-        formData.submittedAt = new Date()
+        if (req.file) {
+            formData.cv = req.file.filename
+        }
         const newForm = new FormSubmission(formData)
 
         await newForm.save()
