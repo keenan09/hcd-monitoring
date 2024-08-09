@@ -246,7 +246,8 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
       </div>
       
       {/* <label htmlFor="CV">Upload CV*</label>
-      <input type="file" id="CV" className='upload-input' name="cv" placeholder='Upload your resume here...' required onChange={onChangeHandler} autoComplete="off"/> */}
+      <input type="file" id="CV" className='upload-input' name="cv" accept="application/pdf "placeholder='Upload your resume here...' 
+      required onChange={onChangeHandler} autoComplete="off"/> */}
     
     </div>
   )
