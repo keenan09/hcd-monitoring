@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema
 
-const FormSubmissionSchema = new Schema({
+const ApplicantSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
@@ -20,6 +19,6 @@ const FormSubmissionSchema = new Schema({
     cv: { type: String, required: true },
 });
 
-const Applicant = mongoose.model('Applicant', FormSubmissionSchema)
+const Applicant = mongoose.model('Applicant', ApplicantSchema)
 
 module.exports = Applicant
