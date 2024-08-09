@@ -19,6 +19,6 @@ const FormSubmissionSchema = new Schema({
     submittedAt: { type: Date, default: Date.now } 
 });
 
-const Form = mongoose.model('Form', FormSubmissionSchema)
+const Applicant = mongoose.model('Applicant', FormSubmissionSchema)
 
-module.exports = Form
+module.exports = Applicant

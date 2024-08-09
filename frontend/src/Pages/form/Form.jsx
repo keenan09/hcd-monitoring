@@ -11,20 +11,20 @@ export default function Form({ job }) {
   const [showSuccess, setShowSuccess] = useState(false)
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
-    const handleFormSubmit = () => {
-      
-      setShowSuccess(true)
-      setIsFormSubmitted(true)
-      setTimeout(() => {
-        setShowSuccess(false)
-        // setIsFormSubmitted(false)
-        }, 3000)
-    };
+  const handleModalPopUpSubmit = () => {
+    
+    setShowSuccess(true)
+    setIsFormSubmitted(true)
+    setTimeout(() => {
+      setShowSuccess(false)
+      // setIsFormSubmitted(false)
+      }, 3000)
+  };
   
   return (
     <div className='form-container'> 
       <FormHeader/>
-      {!isFormSubmitted && <FormPertanyaan onFormSubmit={handleFormSubmit} job={job} />}
+      {!isFormSubmitted && <FormPertanyaan popUpSubmit={handleModalPopUpSubmit} job={job} />}
       {showSuccess && <div className="success-popup">Submit Success</div>}
     </div>
   );
@@ -39,7 +39,7 @@ function FormHeader(){
   )
 }
 
-function FormPertanyaan({onFormSubmit, job}){
+function FormPertanyaan({popUpSubmit, job}){
   const initialBasicState = {
     name: '',
     email: '',
@@ -68,12 +68,13 @@ function FormPertanyaan({onFormSubmit, job}){
     const formData = {
       ...formBasic, 
       ...formAdvance,
+      salary: parseInt(formAdvance.salary.replace(/\./g, ''), 10),
       jobId: job._id,  
       jobName: job.jobname 
     }
     try {
-      await axios.post('http://localhost:5000/forms/submit', formData);
-      onFormSubmit();
+      await axios.post('http://localhost:5000/applicants/submit', formData);
+      popUpSubmit();
     } catch (error) {
         console.error('There was an error submitting the form!', error);
     }
@@ -82,6 +83,8 @@ function FormPertanyaan({onFormSubmit, job}){
     setFormAdvance(initialAdvanceState)
     // document.getElementById('CV').value = ''
   };
+
+  
 
   return(
     <div className='form-pertanyaan' >
@@ -157,6 +160,14 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
   //     })
   //   }
   // }
+  function formatSalary(value) {
+    return value.replace(/\D/g, '') 
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  }
+  
+  // function unformatSalary(value) {
+  //   return value.replace(/\./g, ''); // Remove the thousand separators
+  // }
 
   const onChangeHandler = (e) => {
     const { name, value, type, checked } = e.target
@@ -167,6 +178,12 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
         languages: checked 
           ? [...formAdvance.languages, value] 
           : formAdvance.languages.filter(lang => lang !== value),
+      })
+    } else if (name === 'salary'){
+      const formattedValue = formatSalary(value);
+      setFormAdvance({
+        ...formAdvance,
+        salary: formattedValue,
       })
     } else {
       setFormAdvance({
@@ -217,7 +234,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
       </div>
 
       <label htmlFor="Salary">Ekspektasi Gaji?*</label>
-      <input type="number" id="Salary" name="salary" min="0" step="50000" placeholder='Type your salary expectation here...' required 
+      <input type="text" id="Salary" name="salary" min="0" step="50000" placeholder='Type your salary expectation here...' required 
       onChange={onChangeHandler} value={formAdvance.salary} autoComplete="off"/>
 
       <label>Bersedia ditempatkan dimana saja?*</label>
