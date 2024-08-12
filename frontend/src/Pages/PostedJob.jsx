@@ -109,7 +109,7 @@ function JobList({ jobs, formatDate, openModal}) {
                             <p>{job.jobAimed}</p>
                         </div>
                         <div className="deadline">
-                            <p>Batas Lamar : {formatDate(job.dateEnd)}</p>
+                            <p>Deadline : {formatDate(job.dateEnd)}</p>
                         </div>
                         <div className="card-job-button-group">
                             <button className="see-details-button" onClick={() => openModal(job)}> See Details </button>

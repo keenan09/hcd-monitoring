@@ -20,6 +20,9 @@ app.use('/jobs', routeGetJob)
 const routePostForm = require('./routes/routePostForm')
 app.use('/applicants', routePostForm)
 
+const routeGetApplicants = require('./routes/routeGetApplicant')
+app.use('/applicants', routeGetApplicants)
+
 // Start the server
 const PORT = 5000
 app.listen(PORT, () => {

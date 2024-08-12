@@ -1,7 +1,8 @@
 import React from 'react'
 import '../../Assets/Styles/Dashboard.css'
 import Navbar from '../../Components/Navbar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 
 //HCD Dashboard Feature
@@ -11,7 +12,23 @@ export default function Dashboard() {
         position: '',
         startDate: '',
         endDate: ''
-    });
+    })
+    const [applicants, setApplicants] = useState([])
+
+    useEffect(() => {
+        const fetchApplicants = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/applicants', {
+                    params: filter
+                });
+                setApplicants(response.data);
+            } catch (error) {
+                console.error('Error fetching applicants:', error);
+            }
+        };
+
+        fetchApplicants();
+    }, [filter]);
 
     const handleFilterChange = (newFilter) => {
         setFilter(prevFilter => ({
@@ -19,27 +36,29 @@ export default function Dashboard() {
             [newFilter.type]: newFilter.value
         }));
     };
+
+
     
 
-    const applicants = [
-        { name: 'Alice Johnson', cv: 'CV_Alice_Johnson', position: 'Software Engineer', email: 'alice.johnson@example.com', score: 95, timestamp: '2024-07-15' },
-        { name: 'Bob Smith', cv: 'CV_Bob_Smith', position: 'Data Analyst', email: 'bob.smith@example.com', score: 60, timestamp: '2024-07-16' },
-        { name: 'Charlie Brown', cv: 'CV_Charlie_Brown', position: 'Business Analyst', email: 'charlie.brown@example.com', score: 88, timestamp: '2024-07-17' },
-        { name: 'Diana Prince', cv: 'CV_Diana_Prince', position: 'Designer', email: 'diana.prince@example.com', score: 92, timestamp: '2024-07-18' },
-        { name: 'Edward Elric', cv: 'CV_Edward_Elric', position: 'Project Coordinator', email: 'edward.elric@example.com', score: 85, timestamp: '2024-07-19' },
-        { name: 'Fiona Glenanne', cv: 'CV_Fiona_Glenanne', position: 'Business Analyst', email: 'fiona.glenanne@example.com', score: 55, timestamp: '2024-07-20' },
-        { name: 'George Michael', cv: 'CV_George_Michael', position: 'Software Engineer', email: 'george.michael@example.com', score: 90, timestamp: '2024-07-21' },
-        { name: 'Hannah Montana', cv: 'CV_Hannah_Montana', position: 'Designer', email: 'hannah.montana@example.com', score: 78, timestamp: '2024-07-22' },
-        { name: 'Isaac Newton', cv: 'CV_Isaac_Newton', position: 'Software Engineer', email: 'isaac.newton@example.com', score: 62, timestamp: '2024-07-23' },
-        { name: 'Jane Austen', cv: 'CV_Jane_Austen', position: 'Business Analyst', email: 'jane.austen@example.com', score: 91, timestamp: '2024-07-24' },
-        { name: 'Keenan Ariqul Hashim', cv: 'CV_Keenan_Ariqul_Hashim', position: 'Business Analyst', email: 'keenan.hashim@example.com', score: 100, timestamp: '2024-07-25' }
-    ];
+    // const applicants = [
+    //     { name: 'Alice Johnson', cv: 'CV_Alice_Johnson', position: 'Software Engineer', email: 'alice.johnson@example.com', score: 95, timestamp: '2024-07-15' },
+    //     { name: 'Bob Smith', cv: 'CV_Bob_Smith', position: 'Data Analyst', email: 'bob.smith@example.com', score: 60, timestamp: '2024-07-16' },
+    //     { name: 'Charlie Brown', cv: 'CV_Charlie_Brown', position: 'Business Analyst', email: 'charlie.brown@example.com', score: 88, timestamp: '2024-07-17' },
+    //     { name: 'Diana Prince', cv: 'CV_Diana_Prince', position: 'Designer', email: 'diana.prince@example.com', score: 92, timestamp: '2024-07-18' },
+    //     { name: 'Edward Elric', cv: 'CV_Edward_Elric', position: 'Project Coordinator', email: 'edward.elric@example.com', score: 85, timestamp: '2024-07-19' },
+    //     { name: 'Fiona Glenanne', cv: 'CV_Fiona_Glenanne', position: 'Business Analyst', email: 'fiona.glenanne@example.com', score: 55, timestamp: '2024-07-20' },
+    //     { name: 'George Michael', cv: 'CV_George_Michael', position: 'Software Engineer', email: 'george.michael@example.com', score: 90, timestamp: '2024-07-21' },
+    //     { name: 'Hannah Montana', cv: 'CV_Hannah_Montana', position: 'Designer', email: 'hannah.montana@example.com', score: 78, timestamp: '2024-07-22' },
+    //     { name: 'Isaac Newton', cv: 'CV_Isaac_Newton', position: 'Software Engineer', email: 'isaac.newton@example.com', score: 62, timestamp: '2024-07-23' },
+    //     { name: 'Jane Austen', cv: 'CV_Jane_Austen', position: 'Business Analyst', email: 'jane.austen@example.com', score: 91, timestamp: '2024-07-24' },
+    //     { name: 'Keenan Ariqul Hashim', cv: 'CV_Keenan_Ariqul_Hashim', position: 'Business Analyst', email: 'keenan.hashim@example.com', score: 100, timestamp: '2024-07-25' }
+    // ];
     
 
     const filteredApplicants = applicants.filter(applicant => {
         const isPositionMatch = filter.position ? applicant.position.toLowerCase() === filter.position.toLowerCase() : true;
-        const isDateMatch = (!filter.startDate || new Date(applicant.timestamp) >= new Date(filter.startDate)) &&
-                            (!filter.endDate || new Date(applicant.timestamp) <= new Date(filter.endDate));
+        const isDateMatch = (!filter.startDate || new Date(applicant.submittedAt) >= new Date(filter.startDate)) &&
+                            (!filter.endDate || new Date(applicant.submittedAt) <= new Date(filter.endDate));
         return isPositionMatch && isDateMatch;
     });
 
@@ -47,8 +66,6 @@ export default function Dashboard() {
     const acceptedApplicants = filteredApplicants.filter(applicant => applicant.status === 'Accepted').length;
     const rejectedApplicants = filteredApplicants.filter(applicant => applicant.status === 'Rejected').length;
 
-
-    
     return (
     <div className='container-dashboard'>
         <Navbar/>
@@ -186,7 +203,7 @@ function TableApplicant({applicants, filter}){
                                 <td>{indexOfFirstItem + index + 1}</td>
                                 <td>{applicant.name}</td>
                                 <td>{applicant.cv}</td>
-                                <td>{applicant.position}</td>
+                                <td>{applicant.jobName}</td>
                                 <td>{applicant.email}</td>
                                 <td>{applicant.score}</td>
                             </tr>
