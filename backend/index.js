@@ -17,6 +17,9 @@ app.use('/jobs', routePostJob)
 const routeAllGetJob = require('./routes/routeGetAllJob')
 app.use('/jobs', routeAllGetJob)
 
+const routeGetJobNames = require('./routes/routeGetJobNames');
+app.use('/jobs', routeGetJobNames);
+
 const routePostForm = require('./routes/routePostForm')
 app.use('/applicants', routePostForm)
 

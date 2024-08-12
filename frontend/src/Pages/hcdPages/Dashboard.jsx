@@ -9,7 +9,8 @@ import axios from 'axios'
 export default function Dashboard() {
     
     const [filter, setFilter] = useState({
-        position: '',
+        
+        jobname: '',
         startDate: '',
         endDate: ''
     })
@@ -35,28 +36,14 @@ export default function Dashboard() {
             ...prevFilter,
             [newFilter.type]: newFilter.value
         }));
-    };
-
-
+    }
     
-
-    // const applicants = [
-    //     { name: 'Alice Johnson', cv: 'CV_Alice_Johnson', position: 'Software Engineer', email: 'alice.johnson@example.com', score: 95, timestamp: '2024-07-15' },
-    //     { name: 'Bob Smith', cv: 'CV_Bob_Smith', position: 'Data Analyst', email: 'bob.smith@example.com', score: 60, timestamp: '2024-07-16' },
-    //     { name: 'Charlie Brown', cv: 'CV_Charlie_Brown', position: 'Business Analyst', email: 'charlie.brown@example.com', score: 88, timestamp: '2024-07-17' },
-    //     { name: 'Diana Prince', cv: 'CV_Diana_Prince', position: 'Designer', email: 'diana.prince@example.com', score: 92, timestamp: '2024-07-18' },
-    //     { name: 'Edward Elric', cv: 'CV_Edward_Elric', position: 'Project Coordinator', email: 'edward.elric@example.com', score: 85, timestamp: '2024-07-19' },
-    //     { name: 'Fiona Glenanne', cv: 'CV_Fiona_Glenanne', position: 'Business Analyst', email: 'fiona.glenanne@example.com', score: 55, timestamp: '2024-07-20' },
-    //     { name: 'George Michael', cv: 'CV_George_Michael', position: 'Software Engineer', email: 'george.michael@example.com', score: 90, timestamp: '2024-07-21' },
-    //     { name: 'Hannah Montana', cv: 'CV_Hannah_Montana', position: 'Designer', email: 'hannah.montana@example.com', score: 78, timestamp: '2024-07-22' },
-    //     { name: 'Isaac Newton', cv: 'CV_Isaac_Newton', position: 'Software Engineer', email: 'isaac.newton@example.com', score: 62, timestamp: '2024-07-23' },
-    //     { name: 'Jane Austen', cv: 'CV_Jane_Austen', position: 'Business Analyst', email: 'jane.austen@example.com', score: 91, timestamp: '2024-07-24' },
-    //     { name: 'Keenan Ariqul Hashim', cv: 'CV_Keenan_Ariqul_Hashim', position: 'Business Analyst', email: 'keenan.hashim@example.com', score: 100, timestamp: '2024-07-25' }
-    // ];
-    
-
     const filteredApplicants = applicants.filter(applicant => {
-        const isPositionMatch = filter.position ? applicant.position.toLowerCase() === filter.position.toLowerCase() : true;
+        // console.log('Applicant Jobname:', applicant.jobName) //debugging
+        // console.log('Filter Jobname:', filter.jobname)
+        const isPositionMatch = filter.jobname
+            ? applicant.jobName && applicant.jobName.toLowerCase() === filter.jobname.toLowerCase()
+            : true;
         const isDateMatch = (!filter.startDate || new Date(applicant.submittedAt) >= new Date(filter.startDate)) &&
                             (!filter.endDate || new Date(applicant.submittedAt) <= new Date(filter.endDate));
         return isPositionMatch && isDateMatch;
@@ -81,9 +68,20 @@ export default function Dashboard() {
 }
 
 function Filter({ filter, onFilterChange }){
+    const [jobNames, setJobNames] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:5000/jobs?positionsOnly=true')  // Use query parameter to get only job positions
+            .then(response => response.json())
+            .then(data => setJobNames(data))
+            .catch(error => console.error('Error fetching job positions:', error));
+    }, [])
+
+    
+    
     const handlePositionChange = (event) => {
         onFilterChange({
-            type: 'position',
+            type: 'jobname',
             value: event.target.value
         });
     }
@@ -100,6 +98,12 @@ function Filter({ filter, onFilterChange }){
             value: event.target.value
         });
     }
+
+    const handleReset = () => {
+        onFilterChange({ type: 'jobname', value: '' });
+        onFilterChange({ type: 'startDate', value: '' });
+        onFilterChange({ type: 'endDate', value: '' });
+    };
     
     return(
         <div className='filter'> 
@@ -113,15 +117,16 @@ function Filter({ filter, onFilterChange }){
             </div>
             <div className="filter-2">
                 <label htmlFor="position-search">Position</label> 
-                <select id="position-search" className="dropdown" value={filter.position} onChange={handlePositionChange}>
+                <select id="position-search" className="dropdown" value={filter.jobname} onChange={handlePositionChange}>
                     <option value="">All</option>
-                    <option value="software engineer">Software Engineer</option>
-                    <option value="data analyst">Data Analyst</option>
-                    <option value="business analyst">Business Analyst</option>
-                    <option value="designer">Designer</option>
-                    <option value="project coordinator">Project Coordinator</option>
+                    {jobNames.map((job, index) => (
+                        <option key={index} value={job.jobname}>{job.jobname}</option>
+                    ))}
                 </select>
             </div>
+            <button type="button" className="reset-filter-button" onClick={handleReset} >
+                Reset Filter
+            </button>
         </div>
     )
 }
@@ -215,13 +220,13 @@ function TableApplicant({applicants, filter}){
                                 <td>{applicant.cv}</td>
                                 <td>{applicant.jobName}</td>
                                 <td>{applicant.email}</td>
-                                <td>{formatSalary(applicant.salary)}</td>
+                                <td>Rp. {formatSalary(applicant.salary) + ",00" }</td>
                                 <td>{applicant.score}</td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="6" className="no-data-available">
+                            <td colSpan="7" className="no-data-available">
                                 <p>No Data Available</p>
                             </td>
                         </tr>

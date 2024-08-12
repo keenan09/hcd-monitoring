@@ -2,11 +2,11 @@ const Applicant = require('../models/modelForm'); //model path
 
 exports.getApplicants = async (req, res) => {
     try {
-        const { position, startDate, endDate } = req.query;
+        const { jobName, startDate, endDate } = req.query;
 
         const filters = {}
-        if (position) {
-            filters.position = position
+        if (jobName) {
+            filters.jobName = jobName
         }
         if (startDate || endDate) {
             filters.submittedAt = {}
