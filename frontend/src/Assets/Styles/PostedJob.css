@@ -187,11 +187,11 @@
     cursor: pointer;
 }
 
-.prev-button:hover, .next-button:hover {
+.posted-prev-button:hover, .posted-next-button:hover {
     background-color: #ddd;
 }
 
-.prev-button:active, .next-button:active {
+.posted-prev-button:active, .posted-next-button:active {
     background-color: #ccc;
 }
 

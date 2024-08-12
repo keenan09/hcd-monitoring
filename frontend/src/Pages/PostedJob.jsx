@@ -51,7 +51,7 @@ export default function PostedJob() {
     const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob)
 
     const formatDate = (date) => {
-        return new Intl.DateTimeFormat('id-ID', {
+        return new Intl.DateTimeFormat('en-SG', {
             day: 'numeric',
             month: 'long',
             year: 'numeric'
