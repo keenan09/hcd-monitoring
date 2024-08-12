@@ -170,6 +170,7 @@ function TableApplicant({applicants, filter}){
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
     ));
 
@@ -183,6 +184,14 @@ function TableApplicant({applicants, filter}){
         setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages))
     }
     
+    function formatSalary(value) {
+        if (typeof value !== 'string') {
+            value = String(value)
+        }
+        const rawValue = value.replace(/\D/g, '') // format salary to from "6000000" to "6.000.000"
+        return rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
     return(
         <div className="container-4">
             <table className="top10">
@@ -193,6 +202,7 @@ function TableApplicant({applicants, filter}){
                         <th>CV</th>
                         <th>Position Applied</th>
                         <th>Email</th>
+                        <th>Ekspektasi Gaji</th>
                         <th>Score</th>
                     </tr>
                 </thead>
@@ -205,6 +215,7 @@ function TableApplicant({applicants, filter}){
                                 <td>{applicant.cv}</td>
                                 <td>{applicant.jobName}</td>
                                 <td>{applicant.email}</td>
+                                <td>{formatSalary(applicant.salary)}</td>
                                 <td>{applicant.score}</td>
                             </tr>
                         ))

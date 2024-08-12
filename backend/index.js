@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 const routePostJob = require('./routes/routePostJob')
 app.use('/jobs', routePostJob)
 
-const routeGetJob = require('./routes/routeGetJob')
+const routeGetJob = require('./routes/routeGetAllJob')
 app.use('/jobs', routeGetJob)
 
 const routePostForm = require('./routes/routePostForm')
