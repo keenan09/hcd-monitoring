@@ -9,6 +9,7 @@ connectDB();
 // Middleware
 app.use(cors())
 app.use(bodyParser.json())
+app.use("/cv-uploads", express.static("D:/R17/hcd-monitoring/backend/cv-uploads"))
 
 // Routes
 const routePostJob = require('./routes/routePostJob')

@@ -79,8 +79,7 @@ export default function AddJob() {
         };
         try{
             await axios.post('http://localhost:5000/jobs/add', formAddJobData)
-            // console.log(response.data)
-            navigate('/posted-job')
+            navigate('/r17-career')
         } catch(error){
             console.error("there was an error posting the job!", error)
         } 

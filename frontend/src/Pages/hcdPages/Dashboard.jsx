@@ -217,7 +217,15 @@ function TableApplicant({applicants, filter}){
                             <tr key={indexOfFirstItem + index + 1}>
                                 <td>{indexOfFirstItem + index + 1}</td>
                                 <td>{applicant.name}</td>
-                                <td>{applicant.cv}</td>
+                                <td>
+                                    {applicant.cv ? (
+                                        <a href={`http://localhost:5000/cv-uploads/${applicant.cv}`} target="_blank" rel="noopener noreferrer">
+                                            {applicant.cv}
+                                        </a>
+                                    ) : (
+                                        'No CV'
+                                    )}
+                                </td>
                                 <td>{applicant.jobName}</td>
                                 <td>{applicant.email}</td>
                                 <td>Rp. {formatSalary(applicant.salary) + ",00" }</td>

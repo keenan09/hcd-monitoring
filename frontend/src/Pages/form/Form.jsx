@@ -236,7 +236,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
         checked={formAdvance.relocation === "no"} autoComplete="off"/> Tidak </label>
       </div>
       
-      <label htmlFor="CV">Upload CV*</label>
+      <label htmlFor="CV">Upload CV* (CV_Name)</label>
       <input type="file" id="CV" className='upload-input' name="cv" accept="application/pdf "placeholder='Upload your resume here...' 
       required onChange={onChangeHandler} autoComplete="off"/>
     
