@@ -8,13 +8,13 @@ const jobSchema = new Schema({
     dateStart: { type: Date, required: true },
     dateEnd: { type: Date, required: true },
     jobDescription: { type: String, required: true },
-    minPositionExperience: { type: Number, required: true },
-    maxPositionExperience: { type: Number, required: true },
-    minIndustryExperience: { type: Number, required: true },
-    maxIndustryExperience: { type: Number, required: true },
-    minSalary: { type: Number, required: true },
-    maxSalary: { type: Number, required: true },
-    languages: { type: [String], required: true },
+    minPositionExperience: { type: Number, required: true }, //criteria
+    maxPositionExperience: { type: Number, required: true }, //criteria
+    minIndustryExperience: { type: Number, required: true }, //criteria
+    maxIndustryExperience: { type: Number, required: true }, //criteria
+    minSalary: { type: Number, required: true }, //criteria
+    maxSalary: { type: Number, required: true }, //criteria
+    languages: { type: [String], required: true }, //criteria
 }, {
     timestamps: true,
 })

@@ -7,13 +7,13 @@ const FormSubmissionSchema = new Schema({
     email: { type: String, required: true },
     phone: { type: String, required: true },
     major: { type: String, required: true },
-    compatibility: { type: Number, required: true },
-    gpa: { type: Number, required: true },
-    positionExperience: { type: String, required: true },
-    industryExperience: { type: String, required: true },
-    salary: { type: Number, required: true },
-    relocation: { type: String, required: true },
-    languages: { type: [String], required: true },
+    compatibility: { type: Number, required: true }, // need for the scoring
+    gpa: { type: Number, required: true }, // need for the scoring
+    positionExperience: { type: String, required: true }, // need for the scoring
+    industryExperience: { type: String, required: true }, // need for the scoring
+    salary: { type: Number, required: true }, // need for the scoring
+    relocation: { type: String, required: true }, // need for the scoring
+    languages: { type: [String], required: true }, // need for the scoring
     jobId: { type: Schema.Types.ObjectId, ref: 'Job', required: true },
     jobName: { type: String, required: true },
     submittedAt: { type: Date, default: Date.now },
