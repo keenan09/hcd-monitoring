@@ -176,6 +176,7 @@ function TableApplicant({applicants, filter}){
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
     ));
 
@@ -208,6 +209,7 @@ function TableApplicant({applicants, filter}){
                         <th>Position Applied</th>
                         <th>Email</th>
                         <th>Ekspektasi Gaji</th>
+                        <th>Status</th>
                         <th>Score</th>
                     </tr>
                 </thead>
@@ -229,6 +231,7 @@ function TableApplicant({applicants, filter}){
                                 <td>{applicant.jobName}</td>
                                 <td>{applicant.email}</td>
                                 <td>Rp. {formatSalary(applicant.salary) + ",00" }</td>
+                                <td>{applicant.status}</td>
                                 <td>{applicant.score}</td>
                             </tr>
                         ))

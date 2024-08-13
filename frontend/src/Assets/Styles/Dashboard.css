@@ -186,23 +186,27 @@ button:active {
     width: 30px;
 }
 
-.top10 th:nth-child(6), 
-.top10 td:nth-child(6) {
-    width: 60px;
+/* .top10 th:nth-child(3), 
+.top10 td:nth-child(3) {
+    width: 10px;
+} */
+.top10 th:nth-child(3), .top10 td:nth-child(3) { 
+    width: 10%; /* CV column */
 }
-
 .top10 th {
     background-color: #d0e8a0;
     color: #000;
     padding: 20px;
     font-size: 20px;
     text-align: center;
+    text-overflow: ellipsis;
 }
 
 .top10 td{
     padding: 10px;
     text-align: left;
     font-size: 16px;
+    text-overflow: ellipsis;
 }
 .top10 tbody td a {
     color: #000;

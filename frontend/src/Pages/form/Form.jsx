@@ -194,7 +194,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
         checked={formAdvance.positionExperience === "1-3"} autoComplete="off"/> 1-3 tahun</label>
         <label><input type="radio" name="positionExperience" value="3-5" onChange={onChangeHandler} 
         checked={formAdvance.positionExperience === "3-5"} autoComplete="off"/> 3-5 tahun</label>
-        <label><input type="radio" name="positionExperience" value="5+" onChange={onChangeHandler} 
+        <label><input type="radio" name="positionExperience" value="5-6" onChange={onChangeHandler} 
         checked={formAdvance.positionExperience === "5+"} autoComplete="off"/> Lebih dari 5 tahun</label>
       </div>
 
@@ -206,7 +206,7 @@ function AdvanceQuestion({ formAdvance, setFormAdvance }){
         checked={formAdvance.industryExperience === "1-3"} autoComplete="off"/> 1-3 tahun</label>
         <label><input type="radio" name="industryExperience" value="3-5" onChange={onChangeHandler} 
         checked={formAdvance.industryExperience === "3-5"} autoComplete="off"/> 3-5 tahun</label>
-        <label><input type="radio" name="industryExperience" value="5+" onChange={onChangeHandler} 
+        <label><input type="radio" name="industryExperience" value="5-6" onChange={onChangeHandler} 
         checked={formAdvance.industryExperience === "5+"}autoComplete="off"/> Lebih dari 5 tahun</label>
       </div>
 
