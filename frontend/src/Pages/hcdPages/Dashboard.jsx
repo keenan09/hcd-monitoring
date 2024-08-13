@@ -15,6 +15,8 @@ export default function Dashboard() {
         endDate: ''
     })
     const [applicants, setApplicants] = useState([])
+    const [selectedApplicant, setSelectedApplicant] = useState(null) // selected applicant
+    const [modalOpen, setModalOpen] = useState(false) //modal to click
 
     useEffect(() => {
         const fetchApplicants = async () => {
@@ -37,6 +39,17 @@ export default function Dashboard() {
             [newFilter.type]: newFilter.value
         }));
     }
+
+    const handleNameClick = (applicant) => {
+        setSelectedApplicant(applicant) // Set the selected applicant
+        setModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setSelectedApplicant(null); // Close the details view
+        setModalOpen(false)
+    }
+
     
     const filteredApplicants = applicants.filter(applicant => {
         // console.log('Applicant Jobname:', applicant.jobName) //debugging
@@ -61,8 +74,10 @@ export default function Dashboard() {
         <Filter filter={filter} onFilterChange={handleFilterChange}/>
 
         <ApplicantInfo total={totalApplicants} accepted={acceptedApplicants} rejected={rejectedApplicants} />
-        <TableApplicant applicants={filteredApplicants} filter={filter}/>
-
+        <TableApplicant applicants={filteredApplicants} onNameClick={handleNameClick}/>
+        {modalOpen && selectedApplicant && (
+            <Modal applicant={selectedApplicant} onClose={handleCloseModal} />
+        )}
     </div>  
   )
 }
@@ -150,7 +165,7 @@ function ApplicantInfo({total, accepted, rejected}){
     )
 }
 
-function TableApplicant({applicants, filter}){
+function TableApplicant({applicants, onNameClick}){
     
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -176,7 +191,6 @@ function TableApplicant({applicants, filter}){
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
         </tr>
     ));
 
@@ -189,14 +203,6 @@ function TableApplicant({applicants, filter}){
     const handleNext = () => {
         setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages))
     }
-    
-    function formatSalary(value) {
-        if (typeof value !== 'string') {
-            value = String(value)
-        }
-        const rawValue = value.replace(/\D/g, '') // format salary to from "6000000" to "6.000.000"
-        return rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    }
 
     return(
         <div className="container-4">
@@ -208,7 +214,6 @@ function TableApplicant({applicants, filter}){
                         <th>CV</th>
                         <th>Position Applied</th>
                         <th>Email</th>
-                        <th>Ekspektasi Gaji</th>
                         <th>Status</th>
                         <th>Score</th>
                     </tr>
@@ -218,7 +223,11 @@ function TableApplicant({applicants, filter}){
                         currentItems.map((applicant, index) => (
                             <tr key={indexOfFirstItem + index + 1}>
                                 <td>{indexOfFirstItem + index + 1}</td>
-                                <td>{applicant.name}</td>
+                                <td>
+                                    <button className='applicant-button' onClick={() => onNameClick(applicant)}>
+                                        {applicant.name}
+                                    </button>
+                                </td>
                                 <td>
                                     {applicant.cv ? (
                                         <a href={`http://localhost:5000/cv-uploads/${applicant.cv}`} target="_blank" rel="noopener noreferrer">
@@ -230,7 +239,6 @@ function TableApplicant({applicants, filter}){
                                 </td>
                                 <td>{applicant.jobName}</td>
                                 <td>{applicant.email}</td>
-                                <td>Rp. {formatSalary(applicant.salary) + ",00" }</td>
                                 <td>{applicant.status}</td>
                                 <td>{applicant.score}</td>
                             </tr>
@@ -259,6 +267,38 @@ function TableApplicant({applicants, filter}){
             </div>
         </div>
     )
+}
+
+function Modal({ applicant, onClose }) {
+    function formatSalary(value) {
+        if (typeof value !== 'string') {
+            value = String(value)
+        }
+        const rawValue = value.replace(/\D/g, '') // format salary to from "6000000" to "6.000.000"
+        return rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+    
+    return (
+        <div className="modal-applicant-overlay">
+            <div className="modal-applicant-content">
+                <button onClick={onClose} className="close-button">Close</button>   
+                <h2>Applicant Details</h2>
+                <div className="modal-applicant-details">
+                    <p><strong>Name:</strong> {applicant.name}</p>
+                    <p><strong>Email:</strong> {applicant.email}</p>
+                    <p><strong>Phone:</strong> {applicant.phone}</p>
+                    <p><strong>Major:</strong> {applicant.major}</p>
+                    <p><strong>GPA:</strong> {applicant.gpa}</p>
+                    <p><strong>Position Experience:</strong> {applicant.positionExperience}</p>
+                    <p><strong>Industry Experience:</strong> {applicant.industryExperience}</p>
+                    <p><strong>Salary Expectation:</strong> Rp. {formatSalary(applicant.salary)}</p>
+                    <p><strong>Languages:</strong> {applicant.languages.join(', ')}</p>
+                </div>
+            </div>
+            
+                
+        </div>
+    );
 }
 
 function DashboardTitle (){

@@ -150,7 +150,7 @@ function Modal({ job, closeModal, isApplyJob}) {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-            <div className="modal-body">
+                <div className="modal-body">
                     {isApplyJob ? (
                         <div className="form-container">
                             <Form job={job} />
